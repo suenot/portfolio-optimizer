@@ -60,7 +60,9 @@ const METHODS: { id: Method; label: string; desc: string }[] = [
 ];
 
 const TODAY = new Date().toISOString().slice(0, 10);
-const ONE_YEAR_AGO = new Date(Date.now() - 365 * 24 * 3600 * 1000).toISOString().slice(0, 10);
+// Warehouse stores only 1m candles; keep the default window modest so the
+// resample-to-daily fetch stays fast. Users can widen it manually.
+const DEFAULT_START = new Date(Date.now() - 90 * 24 * 3600 * 1000).toISOString().slice(0, 10);
 
 // ─── Helper Components ────────────────────────────────────────────
 
@@ -130,7 +132,7 @@ export default function OptimizerPage() {
   const [availableSymbols, setAvailableSymbols] = useState<string[]>([]);
   const [assets, setAssets] = useState<PortfolioAsset[]>(DEFAULT_ASSETS);
   const [method, setMethod] = useState<Method>('hrp');
-  const [dateRange, setDateRange] = useState({ start: ONE_YEAR_AGO, end: TODAY });
+  const [dateRange, setDateRange] = useState({ start: DEFAULT_START, end: TODAY });
   const [loading, setLoading] = useState(false);
   const [loadingPhase, setLoadingPhase] = useState('');
   const [result, setResult] = useState<OptResult | null>(null);

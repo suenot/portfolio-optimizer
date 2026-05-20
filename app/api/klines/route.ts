@@ -35,7 +35,9 @@ export async function GET(req: NextRequest) {
       symbolList.map(async (symbol) => {
         try {
           const url = `${WAREHOUSE}/data/${symbol}/klines?tf=${tf}&start=${start}&end=${end}&format=json`;
-          const res = await fetch(url, { signal: AbortSignal.timeout(10000) });
+          // The warehouse only stores 1m candles; a wide range is a large
+          // transfer that is then resampled to daily — allow generous time.
+          const res = await fetch(url, { signal: AbortSignal.timeout(90000) });
           if (!res.ok) return;
           const data: { timestamp: string; close: number }[] = await res.json();
 
