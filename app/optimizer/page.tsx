@@ -37,11 +37,11 @@ type SortKey = 'name' | 'ret' | 'vol' | 'sharpe' | 'sortino' | 'maxDD' | 'elapse
 // ─── Constants ───────────────────────────────────────────────────
 
 const DEFAULT_ASSETS: PortfolioAsset[] = [
-  { id: '1', ticker: 'BTC' },
-  { id: '2', ticker: 'ETH' },
-  { id: '3', ticker: 'AAPL' },
-  { id: '4', ticker: 'GLD' },
-  { id: '5', ticker: 'SPY' },
+  { id: '1', ticker: 'BTCUSDT' },
+  { id: '2', ticker: 'ETHUSDT' },
+  { id: '3', ticker: 'SOLUSDT' },
+  { id: '4', ticker: 'BNBUSDT' },
+  { id: '5', ticker: 'XRPUSDT' },
 ];
 
 const METHODS: { id: Method; label: string; desc: string }[] = [
@@ -59,10 +59,10 @@ const METHODS: { id: Method; label: string; desc: string }[] = [
   { id: 'pipeline',        label: 'Pipeline',        desc: 'Composite: HRP + long/short + CVaR' },
 ];
 
-const TODAY = new Date().toISOString().slice(0, 10);
-// Warehouse stores only 1m candles; keep the default window modest so the
-// resample-to-daily fetch stays fast. Users can widen it manually.
-const DEFAULT_START = new Date(Date.now() - 90 * 24 * 3600 * 1000).toISOString().slice(0, 10);
+// Default window sits inside the warehouse's available coverage
+// (1m data spans 2023-02 .. 2026-02). Users can change it in the UI.
+const DEFAULT_START = '2025-09-01';
+const DEFAULT_END = '2026-02-28';
 
 // ─── Helper Components ────────────────────────────────────────────
 
@@ -132,7 +132,7 @@ export default function OptimizerPage() {
   const [availableSymbols, setAvailableSymbols] = useState<string[]>([]);
   const [assets, setAssets] = useState<PortfolioAsset[]>(DEFAULT_ASSETS);
   const [method, setMethod] = useState<Method>('hrp');
-  const [dateRange, setDateRange] = useState({ start: DEFAULT_START, end: TODAY });
+  const [dateRange, setDateRange] = useState({ start: DEFAULT_START, end: DEFAULT_END });
   const [loading, setLoading] = useState(false);
   const [loadingPhase, setLoadingPhase] = useState('');
   const [result, setResult] = useState<OptResult | null>(null);
