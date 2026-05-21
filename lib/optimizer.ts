@@ -47,6 +47,13 @@ export const ASSET_UNIVERSE: Record<string, { name: string; color: string }> = {
   DOTUSDT: { name: "DOT/USDT",       color: "#E6007A" },
   LTCUSDT: { name: "LTC/USDT",       color: "#345D9D" },
   LINKUSDT:{ name: "LINK/USDT",      color: "#2A5ADA" },
+  ZECUSDT:    { name: "Zcash/USDT",       color: "#F4B728" },
+  XAUTUSDT:   { name: "Tether Gold/USDT", color: "#B8860B" },
+  RATSUSDT:   { name: "Rats/USDT",        color: "#8B5CF6" },
+  "1000RATSUSDT": { name: "Rats/USDT (1000x)", color: "#8B5CF6" },
+  FLOWUSDT:   { name: "Flow/USDT",        color: "#00EF8B" },
+  KAVAUSDT:   { name: "Kava/USDT",        color: "#FF433D" },
+  LINEAUSDT:  { name: "Linea/USDT",       color: "#61C3FF" },
 };
 
 export const PALETTE = [

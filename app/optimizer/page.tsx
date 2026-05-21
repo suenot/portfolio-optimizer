@@ -36,12 +36,16 @@ type SortKey = 'name' | 'ret' | 'vol' | 'sharpe' | 'sortino' | 'maxDD' | 'elapse
 
 // ─── Constants ───────────────────────────────────────────────────
 
+// A deliberately mixed default basket over the default window
+// (2025-09 .. 2026-02): 3 strong winners + 3 heavy losers, so the
+// optimizer demo shows a meaningful spread out of the box.
 const DEFAULT_ASSETS: PortfolioAsset[] = [
-  { id: '1', ticker: 'BTCUSDT' },
-  { id: '2', ticker: 'ETHUSDT' },
-  { id: '3', ticker: 'SOLUSDT' },
-  { id: '4', ticker: 'BNBUSDT' },
-  { id: '5', ticker: 'XRPUSDT' },
+  { id: '1', ticker: 'ZECUSDT' },      // +444%
+  { id: '2', ticker: 'XAUTUSDT' },     //  +52%
+  { id: '3', ticker: '1000RATSUSDT' }, // +104%
+  { id: '4', ticker: 'FLOWUSDT' },     //  -90%
+  { id: '5', ticker: 'KAVAUSDT' },     //  -87%
+  { id: '6', ticker: 'LINEAUSDT' },    //  -92%
 ];
 
 const METHODS: { id: Method; label: string; desc: string }[] = [
