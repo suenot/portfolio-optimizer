@@ -3,7 +3,7 @@ import { runHRP } from "@/lib/hrp";
 
 type Method =
   | "hrp" | "herc" | "ghrp" | "mhrp" | "mvo" | "black_litterman"
-  | "nco" | "entropy_pooling" | "olps" | "rba" | "tic";
+  | "nco" | "entropy_pooling" | "olps" | "rba" | "tic" | "pipeline";
 
 const BACKEND = process.env.HRP_BACKEND_URL || "http://localhost:3001";
 const RF = 0.05;
@@ -56,6 +56,13 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { prices, method = "hrp" }: { prices: Record<string, number[]>; method?: Method } = body;
 
+  if (!prices || typeof prices !== "object") {
+    return NextResponse.json(
+      { error: "Request body must include a `prices` map of symbol → number[]" },
+      { status: 400 }
+    );
+  }
+
   const symbols = Object.keys(prices).filter(
     (s) => Array.isArray(prices[s]) && prices[s].length >= 10
   );
@@ -82,7 +89,7 @@ export async function POST(req: NextRequest) {
   let backend: "rust" | "typescript" = "rust";
   let elapsedUs = 0;
 
-  // All 11 methods are served by the Rust backend.
+  // All 12 methods are served by the Rust backend.
   let ok = false;
   try {
     const resp = await fetch(`${BACKEND}/api/optimize`, {
